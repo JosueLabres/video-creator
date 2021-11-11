@@ -1,19 +1,21 @@
-import menu3
-
-
-class start():
+from robots.text import TextRobot
+from robots.userInput import UserInput
+class Start():
     def __init__(self):
-        searchTerm = self.asKAndReturnSearchTerm()
-        prefix = self.asKAndReturnPrefix()
-        print(prefix)
-
-    def asKAndReturnSearchTerm(self):
-        return input('Digite um termo do Wikipedia ')
+        
+        self.searchTerm = UserInput.asKAndReturnSearchTerm()
+        self.prefix = UserInput.asKAndReturnPrefix()
+        
+        textRobot = TextRobot(self.searchTerm)
+        self.wikipediaContent = textRobot.fetchContentFromWikipedia()
+        self.sentences = textRobot.breakContentIntoSentences()
     
-    def asKAndReturnPrefix(self):
-        m = menu3.Menu(True)
-        prefix = ["Quem é", "O que é",  "A historia de"]
-        c = m.menu("Por favor selecione o prefixo", prefix, "Ou escolha, 'q' para sair ")
-        return prefix[c - 1]
+    def get_content(self):
+        return {
+            "search_term": self.searchTerm,
+            "prefix": self.prefix,
+            "wikipedia_content": self.wikipediaContent,
+            "sentences": self.sentences
+        }
 
-start()
+print(Start().get_content())
