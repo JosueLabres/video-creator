@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pysbd
+import re
 class TextRobot():
     def __init__(self, searchTerm):
         self.searchTerm = searchTerm
@@ -16,8 +17,9 @@ class TextRobot():
        self.wikipedia = wikipedia
        return wikipedia
     def sanitizeContent(self):
-        ...
+        sanitize = re.sub('\[[0-9]*\]', ' ', self.wikipedia)
+        return sanitize
     
-    def breakContentIntoSentences(self):
+    def breakContentIntoSentences(self, text):
         seg = pysbd.Segmenter(language="en", clean=False)
-        return seg.segment(self.wikipedia)
+        return seg.segment(text)

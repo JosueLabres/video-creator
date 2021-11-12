@@ -8,14 +8,20 @@ class Start():
         
         textRobot = TextRobot(self.searchTerm)
         self.wikipediaContent = textRobot.fetchContentFromWikipedia()
-        self.sentences = textRobot.breakContentIntoSentences()
+        self.sanitizeContent = textRobot.sanitizeContent()
+        self.sentences = textRobot.breakContentIntoSentences(self.sanitizeContent)
+        
     
     def get_content(self):
         return {
             "search_term": self.searchTerm,
             "prefix": self.prefix,
             "wikipedia_content": self.wikipediaContent,
+            "sanitizeContent": self.sanitizeContent,
             "sentences": self.sentences
         }
 
-print(Start().get_content())
+semtemces = Start().sentences
+
+for semtemce in semtemces:
+    print(f'{semtemce}\n\n')
