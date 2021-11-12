@@ -2,15 +2,15 @@ from robots.text import TextRobot
 from robots.userInput import UserInput
 class Start():
     def __init__(self):
-        
+        maxSentences = 7
         self.searchTerm = UserInput.asKAndReturnSearchTerm()
         self.prefix = UserInput.asKAndReturnPrefix()
         
         textRobot = TextRobot(self.searchTerm)
         self.wikipediaContent = textRobot.fetchContentFromWikipedia()
         self.sanitizeContent = textRobot.sanitizeContent()
-        self.sentences = textRobot.breakContentIntoSentences(self.sanitizeContent)
-        
+        sentences = textRobot.breakContentIntoSentences(self.sanitizeContent)
+        self.sentences = textRobot.watson(sentences, maxSentences)
     
     def get_content(self):
         return {
@@ -21,7 +21,6 @@ class Start():
             "sentences": self.sentences
         }
 
-semtemces = Start().sentences
 
-for semtemce in semtemces:
-    print(f'{semtemce}\n\n')
+
+print(Start().sentences)
